@@ -26,13 +26,14 @@
 	<nav
 		aria-label="Navigasi panitia"
 		class="deret"
-		style="flex-wrap: nowrap; overflow-x: auto; margin-bottom: 1.2rem; padding-bottom: 0.35rem"
+		style="flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.2rem"
 	>
 		{#each menu as m (m.href)}
 			<a
 				class="btn btn-kecil {aktif(m.href) ? '' : 'btn-lembut'}"
 				href={m.href}
 				aria-current={aktif(m.href) ? 'page' : undefined}
+				style="white-space: nowrap"
 			>
 				<Ikon nama={m.ikon} ukuran={16} /> {m.label}
 			</a>

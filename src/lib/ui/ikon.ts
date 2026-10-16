@@ -2,6 +2,7 @@
 // Hanya ikon yang benar-benar dipakai yang diimpor agar bundel tetap kecil.
 // `?raw` mengambil isi berkas SVG mentah saat build; lihat komponen `Ikon.svelte`.
 import analytics from 'pixelarticons/svg/analytics.svg?raw';
+import camera from 'pixelarticons/svg/camera.svg?raw';
 import arrowLeft from 'pixelarticons/svg/arrow-left.svg?raw';
 import arrowRight from 'pixelarticons/svg/arrow-right.svg?raw';
 import bookOpen from 'pixelarticons/svg/book-open.svg?raw';
@@ -52,6 +53,7 @@ function isi(svg: string): string {
 
 export const IKON = {
 	analytics: isi(analytics),
+	camera: isi(camera),
 	'arrow-left': isi(arrowLeft),
 	'arrow-right': isi(arrowRight),
 	'book-open': isi(bookOpen),

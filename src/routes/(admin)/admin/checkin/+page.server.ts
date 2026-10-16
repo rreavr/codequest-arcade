@@ -44,5 +44,20 @@ export const actions: Actions = {
 		if (error) return fail(500, { pesan: `Gagal menyimpan: ${error.message}` });
 
 		return { pesan: `${p.nama} (${p.nim}) tercatat hadir.`, status: 'baru' as const };
+	},
+
+	batal: async ({ request }) => {
+		const admin = klienWajib(buatKlienAdmin());
+		const form = await request.formData();
+		const pesertaId = String(form.get('peserta_id') ?? '').trim();
+		if (!pesertaId) return fail(400, { pesan: 'ID peserta tidak valid.' });
+
+		const { data: target } = await admin.from('peserta').select('nama').eq('id', pesertaId).maybeSingle();
+		if (!target) return fail(404, { pesan: 'Peserta tidak ditemukan.' });
+
+		const { error } = await admin.from('peserta').update({ checkin_pada: null }).eq('id', pesertaId);
+		if (error) return fail(500, { pesan: `Gagal membatalkan: ${error.message}` });
+
+		return { pesan: `Check-in ${(target as { nama: string }).nama} dibatalkan.`, status: 'baru' as const };
 	}
 };
