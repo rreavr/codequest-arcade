@@ -69,10 +69,17 @@
 {#if !cek.hadir}
 	<section class="kartu">
 		<h2>Check-in Base Camp</h2>
-		<p>
-			Datangi meja panitia dan sebutkan NIM <strong>{b.peserta.nim}</strong> untuk dicatat
-			hadir — tidak perlu memindai apa pun.
-		</p>
+		<p>Tunjukkan QR code ini ke panitia untuk dicatat hadir.</p>
+		<div style="text-align: center; margin: 0.75rem 0">
+			<img
+				src={data.qrDataUrl}
+				alt="QR code check-in {b.peserta.nama}"
+				width="200"
+				height="200"
+				style="display: inline-block; image-rendering: pixelated; border: 3px solid var(--garis)"
+			/>
+		</div>
+		<p class="petunjuk-kecil" style="text-align: center">NIM: {b.peserta.nim}</p>
 		<p class="petunjuk-kecil">Status di halaman ini berubah begitu panitia mencatatmu.</p>
 	</section>
 {:else}
