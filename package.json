@@ -32,7 +32,7 @@
     "@types/sql.js": "^1.4.11",
     "svelte": "latest",
     "svelte-check": "latest",
-    "typescript": "5",
+    "typescript": "^6.0.0",
     "vite": "latest",
     "vitest": "latest"
   }
