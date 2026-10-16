@@ -1,0 +1,39 @@
+{
+  "name": "codequest-arcade",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#lib": "./src/lib/index.js",
+    "#lib/*": "./src/lib/*"
+  },
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepare": "svelte-kit sync || echo ''",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@supabase/ssr": "latest",
+    "@supabase/supabase-js": "latest",
+    "aws4fetch": "^1.0.20",
+    "fast-xml-parser": "^5.11.2",
+    "pdf-lib": "^1.17.1",
+    "pixelarticons": "^2.4.2",
+    "sql.js": "^1.15.0",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-cloudflare": "^8.0.1",
+    "@sveltejs/kit": "latest",
+    "@sveltejs/vite-plugin-svelte": "latest",
+    "@types/sql.js": "^1.4.11",
+    "svelte": "latest",
+    "svelte-check": "latest",
+    "typescript": "5",
+    "vite": "latest",
+    "vitest": "latest"
+  }
+}
