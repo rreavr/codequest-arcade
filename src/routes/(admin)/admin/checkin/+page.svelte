@@ -3,9 +3,27 @@
 	import Ikon from '#lib/ui/Ikon.svelte';
 	import jsQR from 'jsqr';
 
+	import { invalidateAll } from '$app/navigation';
+
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
 	const hadir = $derived(data.peserta.filter((p) => p.checkin_pada).length);
+
+	// --- Filter status ---
+	let filterStatus = $state<'semua' | 'belum' | 'hadir'>('semua');
+	const tampil = $derived(
+		data.peserta.filter((p) => {
+			if (filterStatus === 'hadir') return p.checkin_pada !== null;
+			if (filterStatus === 'belum') return p.checkin_pada === null;
+			return true;
+		})
+	);
+
+	// --- Auto-refresh tiap 10 detik ---
+	$effect(() => {
+		const interval = setInterval(() => invalidateAll(), 10000);
+		return () => clearInterval(interval);
+	});
 
 	// --- QR scanner state ---
 	let scanning = $state(false);
@@ -15,6 +33,9 @@
 	let detectorLoop: ReturnType<typeof requestAnimationFrame> | null = null;
 	let scanError = $state('');
 	let scanPending = $state('');
+
+	// Konfirmasi sebelum submit
+	let konfirmasi = $state<{ id: string; nama: string; nim: string } | null>(null);
 
 	let hiddenForm = $state<HTMLFormElement | null>(null);
 	let hiddenPesertaId = $state('');
@@ -61,12 +82,10 @@
 				const raw = code.data;
 				const peserta = data.peserta.find((p) => p.id === raw);
 				if (peserta) {
-					stopScan();
-					hiddenPesertaId = raw;
-					scanPending = peserta.nama;
-					setTimeout(() => hiddenForm?.requestSubmit(), 0);
-					return;
-				}
+						stopScan();
+						konfirmasi = { id: raw, nama: peserta.nama, nim: peserta.nim };
+						return;
+					}
 			}
 			detectorLoop = requestAnimationFrame(loop);
 		};
@@ -79,6 +98,17 @@
 		if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
 		if (videoEl) videoEl.srcObject = null;
 		canvasEl = null;
+	}
+
+	function konfirmasiCheckin() {
+		if (!konfirmasi) return;
+		hiddenPesertaId = konfirmasi.id;
+		konfirmasi = null;
+		setTimeout(() => hiddenForm?.requestSubmit(), 0);
+	}
+
+	function batalKonfirmasi() {
+		konfirmasi = null;
 	}
 </script>
 
@@ -98,7 +128,16 @@
 
 <section class="kartu">
 	<h2><Ikon nama="camera" ukuran={18} /> Scan QR</h2>
-	{#if !scanning}
+	{#if konfirmasi}
+		<p>Konfirmasi check-in:</p>
+		<p><strong>{konfirmasi.nama}</strong> · <span class="angka">{konfirmasi.nim}</span></p>
+		<div class="deret" style="margin-top: 0.75rem; gap: 0.5rem">
+			<button class="btn" onclick={konfirmasiCheckin}>
+				<Ikon nama="checkbox-on" ukuran={16} /> Ya, check-in
+			</button>
+			<button class="btn btn-garis" onclick={batalKonfirmasi}>Batal, scan ulang</button>
+		</div>
+	{:else if !scanning}
 		<button class="btn" onclick={mulaiScan}>
 			<Ikon nama="camera" ukuran={16} /> Buka kamera
 		</button>
@@ -144,8 +183,15 @@
 </section>
 
 <section class="kartu">
-	<h2>Daftar peserta</h2>
-	<div class="tabel-gulir">
+	<div class="deret" style="justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem">
+		<h2 style="margin: 0">Daftar peserta</h2>
+		<div class="deret" style="gap: 0.35rem">
+			<button class="btn btn-kecil {filterStatus === 'semua' ? '' : 'btn-lembut'}" onclick={() => (filterStatus = 'semua')}>Semua ({data.peserta.length})</button>
+			<button class="btn btn-kecil {filterStatus === 'hadir' ? '' : 'btn-lembut'}" onclick={() => (filterStatus = 'hadir')}><Ikon nama="check" ukuran={13} /> Hadir ({hadir})</button>
+			<button class="btn btn-kecil {filterStatus === 'belum' ? '' : 'btn-lembut'}" onclick={() => (filterStatus = 'belum')}>Belum ({data.peserta.length - hadir})</button>
+		</div>
+	</div>
+	<div class="tabel-gulir" style="margin-top: 0.75rem">
 		<table>
 			<thead>
 				<tr>
@@ -157,7 +203,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each data.peserta as p (p.id)}
+				{#each tampil as p (p.id)}
 					<tr>
 						<td>{p.nama}</td>
 						<td class="angka">{p.nim}</td>
@@ -171,14 +217,19 @@
 								<span class="chip chip-belum">Belum</span>
 							{/if}
 						</td>
-						<td>
-							{#if !p.checkin_pada}
-								<form method="POST" action="?/checkin">
-									<input type="hidden" name="peserta_id" value={p.id} />
-									<button class="btn btn-kecil btn-garis" type="submit">Check-in</button>
-								</form>
-							{/if}
-						</td>
+							<td>
+								{#if !p.checkin_pada}
+									<form method="POST" action="?/checkin" style="display: contents">
+										<input type="hidden" name="peserta_id" value={p.id} />
+										<button class="btn btn-kecil btn-garis" type="submit" style="min-width: 6rem">Check-in</button>
+									</form>
+								{:else}
+									<form method="POST" action="?/batal" style="display: contents">
+										<input type="hidden" name="peserta_id" value={p.id} />
+										<button class="btn btn-kecil btn-bahaya" type="submit" style="min-width: 6rem">Batal</button>
+									</form>
+								{/if}
+							</td>
 					</tr>
 				{/each}
 			</tbody>

@@ -4,6 +4,7 @@
 	import { MAX_TOTAL_POINTS } from '#lib/constants/points.js';
 	import Ikon from '#lib/ui/Ikon.svelte';
 	import QRCode from 'qrcode';
+	import { invalidateAll } from '$app/navigation';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
@@ -21,6 +22,13 @@
 	let qrDataUrl = $state('');
 	$effect(() => {
 		QRCode.toDataURL(b.peserta.id, { width: 200, margin: 1 }).then((url) => (qrDataUrl = url));
+	});
+
+	// Poll tiap 5 detik selama belum check-in
+	$effect(() => {
+		if (cek.hadir) return;
+		const interval = setInterval(() => invalidateAll(), 5000);
+		return () => clearInterval(interval);
 	});
 </script>
 
