@@ -3,6 +3,7 @@
 	import { LABEL_TIER } from '#lib/constants/acara.js';
 	import { MAX_TOTAL_POINTS } from '#lib/constants/points.js';
 	import Ikon from '#lib/ui/Ikon.svelte';
+	import QRCode from 'qrcode';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
@@ -16,7 +17,12 @@
 	const persenTarget = $derived(
 		data.targetBerikut ? Math.min(100, Math.round((b.poin / data.targetBerikut.poin) * 100)) : 100
 	);
-	</script>
+
+	let qrDataUrl = $state('');
+	$effect(() => {
+		QRCode.toDataURL(b.peserta.id, { width: 200, margin: 1 }).then((url) => (qrDataUrl = url));
+	});
+</script>
 
 {#snippet centang(nilai: number | null)}
 	<Ikon nama="check" ukuran={13} />{#if nilai !== null}{nilai}{/if}
@@ -71,13 +77,15 @@
 		<h2>Check-in Base Camp</h2>
 		<p>Tunjukkan QR code ini ke panitia untuk dicatat hadir.</p>
 		<div style="text-align: center; margin: 0.75rem 0">
-			<img
-				src={data.qrDataUrl}
-				alt="QR code check-in {b.peserta.nama}"
-				width="200"
-				height="200"
-				style="display: inline-block; image-rendering: pixelated; border: 3px solid var(--garis)"
-			/>
+			{#if qrDataUrl}
+				<img
+					src={qrDataUrl}
+					alt="QR code check-in {b.peserta.nama}"
+					width="200"
+					height="200"
+					style="display: inline-block; image-rendering: pixelated; border: 3px solid var(--garis)"
+				/>
+			{/if}
 		</div>
 		<p class="petunjuk-kecil" style="text-align: center">NIM: {b.peserta.nim}</p>
 		<p class="petunjuk-kecil">Status di halaman ini berubah begitu panitia mencatatmu.</p>

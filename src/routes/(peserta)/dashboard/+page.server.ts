@@ -1,7 +1,6 @@
 import { error, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { TIER_THRESHOLDS, MISSIONS_PER_LEVEL } from '#lib/constants/points.js';
-import QRCode from 'qrcode';
 import { levelTerbuka, muatRekap, misiBerikutnya } from '#lib/server/rekap.js';
 import { buatKlienAdmin, klienWajib } from '#lib/server/supabase.js';
 
@@ -31,11 +30,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 	];
 	const targetBerikut = target.find((t) => !t.selesai) ?? null;
 
-	const qrDataUrl = await QRCode.toDataURL(id, { width: 200, margin: 1 });
-
 	return {
 		baris,
-		qrDataUrl,
 		misiPerLevel: rekap.misiPerLevel.map((daftar) =>
 			daftar.map((m) => ({
 				id: m.id,
