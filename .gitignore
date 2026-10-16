@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Production & Build outputs
+.svelte-kit/
+.vercel/
+.wrangler/
+build/
+dist/
+
+# Environment Variables & Secrets (Sangat Penting!)
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Temporary / Documentation local files
+docs/
+*.tmp
+*.tmp.*
+
+# OS & System Junk
+.DS_Store
+Thumbs.db
+
+# Editor configurations
+.vscode/*
+!.vscode/extensions.json
+.idea/
