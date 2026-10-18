@@ -2,7 +2,7 @@
 
 Situs pendamping acara HIMTI CodeQuest: First Level 2026 (21 November 2026). SvelteKit 3 + TypeScript + Supabase.
 
-Spesifikasi lengkap ada di [docs/PRD_CodeQuest_Arcade.md](docs/PRD_CodeQuest_Arcade.md).
+Spesifikasi lengkap ada di [docs/PRD_CodeQuest_Arcade.md](docs/PRD_CodeQuest_Arcade.md). Peta modul dan alur data ada di [docs/ARSITEKTUR.md](docs/ARSITEKTUR.md).
 
 ## Kebutuhan
 
@@ -87,7 +87,7 @@ Spesifikasi lengkap ada di [docs/PRD_CodeQuest_Arcade.md](docs/PRD_CodeQuest_Arc
 | `src/lib/tautan.ts` | Validasi tautan tugas (Google Drive/GitHub) dan tautan berkas vault |
 | `src/lib/identitas.ts` | Normalisasi nomor WhatsApp dan pencocokan nama (daftar dan lupa sandi) |
 | `src/lib/belajar` | Konten modul & soal SQL statis untuk halaman belajar |
-| `src/lib/ui` | Komponen `Ikon.svelte` dan registry ikon `pixelarticons` |
+| `src/lib/ui` | Komponen `Ikon.svelte` dan `Bar.svelte`, plus registry ikon `pixelarticons` |
 | `src/lib/server/certificate.ts` | Sertifikat PDF per tier |
 | `src/lib/stores/offlineQueue.ts` | Antrean verifikasi saat Wi-Fi putus (IndexedDB) |
 | `supabase/migrations` | Skema tabel dan kebijakan RLS |

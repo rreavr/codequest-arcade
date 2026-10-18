@@ -212,7 +212,7 @@
 	</p>
 
 	{#if notifikasi}
-		<div class="pesan pesan-info deret" style="justify-content: space-between">
+		<div class="pesan pesan-info deret deret-antara">
 			<span>{notifikasi}</span>
 			<button class="btn btn-kecil btn-garis" onclick={() => (notifikasi = null)}>Tutup</button>
 		</div>
@@ -226,7 +226,7 @@
 			</p>
 			<ul class="senarai">
 				{#each antreanTampil as a (a.peserta_id + a.misi_id)}
-					<li class="deret" style="justify-content: space-between; flex-wrap: wrap">
+					<li class="deret deret-antara">
 						<span>
 							<strong>{a.peserta}</strong> · {a.misi}
 							{#if a.tautan}
@@ -246,7 +246,7 @@
 
 	{#each data.peserta as p (p.id)}
 		<section class="kartu">
-			<div class="deret" style="justify-content: space-between">
+			<div class="deret deret-antara">
 				<h2 style="margin: 0">{p.nama}</h2>
 				<span class="chip tier-{p.tier}" style="border: 1.5px solid currentColor">
 					{p.poin} poin · {LABEL_TIER[p.tier]}
@@ -350,18 +350,18 @@
 	}
 	.tombol-misi.menunggu {
 		border-color: var(--kuning);
-		background: var(--kuning-lembut);
+		background: var(--kuning-gelap);
 		color: var(--kuning);
 	}
 	.tombol-misi.selesai {
 		border-color: var(--hijau);
-		background: var(--hijau-lembut);
+		background: var(--hijau-gelap);
 		color: var(--hijau);
 	}
 	.tombol-misi.lokal {
 		border-style: dashed;
-		border-color: var(--aksen);
-		color: var(--aksen);
+		border-color: var(--hijau);
+		color: var(--hijau);
 	}
 	.tombol-misi.sibuk {
 		opacity: 0.6;

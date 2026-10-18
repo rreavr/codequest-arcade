@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import Bar from '#lib/ui/Bar.svelte';
 	import Ikon from '#lib/ui/Ikon.svelte';
 
 	let { data }: { data: PageData } = $props();
@@ -38,9 +39,7 @@
 
 <section class="kartu">
 	<h2>Target KR2 (Builder atau lebih: minimal 28 dari 32)</h2>
-	<div class="bar" style="height: 14px">
-		<div class="bar-isi" style="width: {Math.round((data.builderPlus / Math.max(1, data.total)) * 100)}%"></div>
-	</div>
+	<Bar bagian={data.builderPlus} total={data.total} tinggi={14} />
 	<p style="margin-top: 0.5rem">
 		<strong>{data.builderPlus}</strong> dari {data.total} peserta sudah tier Builder+.
 		({data.champion} Champion, {data.explorer} Explorer, {data.belumTier} belum ada tier)
@@ -50,15 +49,15 @@
 <section class="kartu">
 	<h2><Ikon nama="target" ukuran={18} /> Misi kunci</h2>
 	<ul class="senarai">
-		<li class="deret" style="justify-content: space-between">
+		<li class="deret deret-antara">
 			<span>Level 2 tuntas — pasang IDE &amp; folder (KR1)</span>
 			<span class="angka"><strong>{data.misiL2Tuntas}</strong>/{data.total}</span>
 		</li>
-		<li class="deret" style="justify-content: space-between">
+		<li class="deret deret-antara">
 			<span>Level 3 tuntas — Error Hunt (KR2)</span>
 			<span class="angka"><strong>{data.misiL3Tuntas}</strong>/{data.total}</span>
 		</li>
-		<li class="deret" style="justify-content: space-between">
+		<li class="deret deret-antara">
 			<span>Survei “lebih siap” (KR3, target 90%)</span>
 			<span class="angka">
 				<strong>{data.lebihSiap}</strong>/{data.jumlahSurvei || 0} terisi

@@ -50,6 +50,7 @@ function isi(svg: string): string {
 		.trim();
 }
 
+/** Peta nama ikon ke markup SVG dari paket pixelarticons. */
 export const IKON = {
 	analytics: isi(analytics),
 	'arrow-left': isi(arrowLeft),

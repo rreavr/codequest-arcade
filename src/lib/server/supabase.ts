@@ -21,6 +21,7 @@ export interface KonfigurasiSupabase {
 	service: string | null;
 }
 
+/** null bila URL atau kunci anon belum diisi di environment. */
 export function konfigurasiSupabase(): KonfigurasiSupabase | null {
 	const url = PUBLIC_SUPABASE_URL;
 	const anon = PUBLIC_SUPABASE_ANON_KEY;

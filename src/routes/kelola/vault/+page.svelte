@@ -14,7 +14,7 @@
 </script>
 
 <div class="lembar lembar-lebar">
-	<div class="deret" style="justify-content: space-between; margin-bottom: 0.75rem">
+	<div class="deret deret-antara" style="margin-bottom: 0.75rem">
 		<h1 style="margin: 0">Kelola Academic Vault</h1>
 		<a class="btn btn-lembut btn-kecil" href={data.beranda}
 			><Ikon nama="arrow-left" ukuran={15} /> Beranda</a

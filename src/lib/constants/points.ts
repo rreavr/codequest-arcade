@@ -22,6 +22,7 @@ export const TIER_THRESHOLDS = {
 
 export type Tier = 'none' | 'explorer' | 'builder' | 'champion';
 
+/** Turunan dari POINTS, jadi ikut berubah saat angka poin disesuaikan. */
 export const MAX_TOTAL_POINTS =
 	POINTS.baseCamp +
 	MISSIONS_PER_LEVEL * POINTS.level1PerMission +

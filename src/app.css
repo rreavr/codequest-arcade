@@ -44,6 +44,8 @@
 	--teks: #ece9ff;
 	--teks-lembut: #a79ecf;
 	--tinta: #0b0a14;
+	/* Teks di atas tombol aksen hijau. */
+	--tombol-teks: #052012;
 
 	--garis: #3b3260;
 	--garis-terang: #5a4f8f;
@@ -66,35 +68,6 @@
 	--kuning-gelap: #33280d;
 	--merah-gelap: #331119;
 
-	/* --- Alias tema lama (dipakai sebagian halaman) --- */
-	--bg-dark: var(--latar);
-	--surface-card: var(--permukaan);
-	--surface-card-hover: var(--permukaan-2);
-	--text-main: var(--teks);
-	--border-dark: var(--garis);
-	--border-highlight: var(--garis-terang);
-	--bayang-pixel: var(--bayang);
-	--aksen: var(--hijau);
-	--aksen-bayang: var(--hijau-terang);
-	--tombol: var(--hijau);
-	--tombol-teks: #052012;
-	--hijau-lembut: var(--hijau-gelap);
-	--kuning-lembut: var(--kuning-gelap);
-	--merah-lembut: var(--merah-gelap);
-	--teal: var(--cyan);
-	--teal-lembut: var(--cyan-gelap);
-	--accent-green: var(--hijau);
-	--accent-green-hover: var(--hijau-terang);
-	--accent-green-soft: var(--hijau-gelap);
-	--accent-cyan: var(--cyan);
-	--accent-cyan-hover: var(--cyan-terang);
-	--accent-cyan-soft: var(--cyan-gelap);
-	--accent-yellow: var(--kuning);
-	--accent-yellow-hover: var(--kuning-terang);
-	--accent-yellow-soft: var(--kuning-gelap);
-	--accent-red: var(--merah);
-	--accent-red-hover: var(--merah-terang);
-	--accent-red-soft: var(--merah-gelap);
 	--radius: 0px;
 	--radius-kecil: 0px;
 	--radius-chip: 0px;
@@ -452,6 +425,10 @@ samp {
 	align-items: center;
 }
 
+.deret-antara {
+	justify-content: space-between;
+}
+
 .diptik {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
@@ -618,9 +595,9 @@ samp {
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
 	padding: 0.18rem 0.3rem;
-	background: var(--accent-cyan-soft);
-	color: var(--accent-cyan);
-	border: 2px solid var(--accent-cyan);
+	background: var(--cyan-gelap);
+	color: var(--cyan);
+	border: 2px solid var(--cyan);
 	box-shadow: 4px 4px 0 var(--bayang);
 	white-space: nowrap;
 }

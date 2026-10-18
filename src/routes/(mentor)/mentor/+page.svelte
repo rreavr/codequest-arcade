@@ -27,7 +27,7 @@
 
 	{#each data.hasil as h (h.kelompok.id)}
 		<section class="kartu">
-			<div class="deret" style="justify-content: space-between">
+			<div class="deret deret-antara">
 				<h2 style="margin: 0">{h.kelompok.nama}</h2>
 				{#if h.jumlahMenunggu > 0}
 					<span class="chip chip-menunggu"
@@ -43,7 +43,7 @@
 
 			<ul class="senarai">
 				{#each h.ringkas as r (r.id)}
-					<li class="deret" style="justify-content: space-between">
+					<li class="deret deret-antara">
 						<span>{r.nama}</span>
 						<span class="petunjuk-kecil angka">
 							{r.poin} poin · {r.misiSelesai}/9 misi ·

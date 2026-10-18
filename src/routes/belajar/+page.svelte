@@ -94,7 +94,7 @@
 		box-shadow: 3px 3px 0 var(--bayang);
 	}
 	.tautan-latihan:hover {
-		border-color: var(--aksen);
+		border-color: var(--hijau);
 	}
 	.baris-jarak {
 		display: flex;

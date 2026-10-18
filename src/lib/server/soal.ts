@@ -11,6 +11,7 @@ export interface HasilPenilaian {
 	jawaban: number[];
 }
 
+/** Cocokkan jawaban dengan kunci; jawaban kosong atau bukan angka dihitung salah. */
 export function nilaiJawaban(
 	soal: SoalRow[],
 	kunci: Map<string, number>,

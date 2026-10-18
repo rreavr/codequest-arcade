@@ -52,7 +52,7 @@
 
 {#each data.kelompok as k (k.id)}
 	<section class="kartu">
-		<div class="deret" style="justify-content: space-between">
+		<div class="deret deret-antara">
 			<h2 style="margin: 0">{k.nama}</h2>
 			<span class="chip {k.anggota.length === 4 ? 'chip-selesai' : 'chip-menunggu'}">
 				<Ikon nama="users" ukuran={13} />{k.anggota.length}/4 peserta

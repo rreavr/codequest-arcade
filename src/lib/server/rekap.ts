@@ -9,8 +9,7 @@ import type {
 	MisiRow,
 	PesertaRow,
 	PenyelesaianRow,
-	SurveiRow,
-	KlaimRow
+	SurveiRow
 } from '#lib/types.js';
 import { MISSIONS_PER_LEVEL, POINTS, type Tier } from '#lib/constants/points.js';
 import { badgesFor, tierFor, totalPoints, type Progress } from './points';
@@ -38,6 +37,7 @@ export function hitungPoinTrivia(benar: number, total: number): number {
 	return Math.min(POINTS.trivia, Math.floor((POINTS.trivia * b) / total));
 }
 
+/** Ubah bahan mentah jadi Progress; poin trivia dihitung di sini. */
 export function keProgress(b: BahanPoin): Progress {
 	return {
 		baseCampDone: b.hadir && b.pretestSelesai,
@@ -83,7 +83,7 @@ interface SumberMentah {
 }
 
 /** Hitung rekap dari data mentah. Murni supaya mudah diuji. */
-export function susunRekap(s: SumberMentah, klaim: Pick<KlaimRow, 'peserta_id' | 'misi_id'>[] = []): DataRekap {
+export function susunRekap(s: SumberMentah): DataRekap {
 	const levelMisi = new Map<string, number>();
 	for (const m of s.misi) levelMisi.set(m.id, m.level_id);
 
@@ -95,9 +95,6 @@ export function susunRekap(s: SumberMentah, klaim: Pick<KlaimRow, 'peserta_id' |
 		if (level >= 1 && level <= 3) arr[level - 1] += 1;
 		selesaiPerPeserta.set(p.peserta_id, arr);
 	}
-	// klaim dipakai halaman misi; di sini hanya untuk kelengkapan tipe
-	void klaim;
-
 	const tes = new Map<string, { pre?: number; post?: number; triviaBenar?: number; triviaTotal?: number }>();
 	for (const h of s.hasilTes) {
 		const t = tes.get(h.peserta_id) ?? {};
@@ -118,7 +115,7 @@ export function susunRekap(s: SumberMentah, klaim: Pick<KlaimRow, 'peserta_id' |
 		bonusPerPeserta.set(b.peserta_id, t);
 	}
 
-	const pesertaById = new Map(s.peserta.map((p) => [p.id, p]));
+	const surveiPerPeserta = new Map(s.survei.map((v) => [v.peserta_id, v.lebih_siap]));
 	const namaKelompok = new Map(s.kelompok.map((k) => [k.id, k.nama]));
 	const namaMentor = new Map(s.mentor.map((m) => [m.id, m.nama]));
 	const kelompokMentor = new Map(s.kelompok.map((k) => [k.id, k.mentor_id]));
@@ -154,7 +151,7 @@ export function susunRekap(s: SumberMentah, klaim: Pick<KlaimRow, 'peserta_id' |
 				skorPretest: t.pre ?? null,
 				skorPosttest: t.post ?? null,
 				skorTrivia: t.triviaTotal ? Math.round((100 * (t.triviaBenar ?? 0)) / t.triviaTotal) : null,
-				lebihSiap: s.survei.find((v) => v.peserta_id === p.id)?.lebih_siap ?? null
+				lebihSiap: surveiPerPeserta.get(p.id) ?? null
 			};
 		});
 
