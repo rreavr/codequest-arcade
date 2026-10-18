@@ -16,6 +16,7 @@ export const ACARA = {
 	tanggalHapusData: 'Selasa, 24 November 2026'
 } as const;
 
+/** Email sintetis akun peserta, mis. 2615001@codequest-arcade.dev. */
 export function emailPesertaUntuk(nim: string): string {
 	return `${nim}@${ACARA.domainEmailPeserta}`;
 }

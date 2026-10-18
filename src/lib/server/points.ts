@@ -13,6 +13,7 @@ export interface Progress {
 
 const clamp = (n: number, min: number, max: number) => Math.min(Math.max(n, min), max);
 
+/** Jumlahkan semua komponen poin; tiap komponen dijepit ke batasnya lebih dulu. */
 export function totalPoints(p: Progress): number {
 	const base = p.baseCampDone ? POINTS.baseCamp : 0;
 	const l1 = clamp(p.level1Missions, 0, MISSIONS_PER_LEVEL) * POINTS.level1PerMission;
@@ -25,6 +26,7 @@ export function totalPoints(p: Progress): number {
 	return base + l1 + l2 + l3 + trivia + err + buddy;
 }
 
+/** Tier tertinggi yang ambangnya sudah terlewati. */
 export function tierFor(points: number): Tier {
 	if (points >= TIER_THRESHOLDS.champion) return 'champion';
 	if (points >= TIER_THRESHOLDS.builder) return 'builder';

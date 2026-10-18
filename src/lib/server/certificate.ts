@@ -24,10 +24,12 @@ const VIOLET = rgb(0.29, 0.2, 0.62);
 const GELAP = rgb(0.13, 0.11, 0.26);
 const ABU = rgb(0.42, 0.42, 0.5);
 
+/** Nama berkas unduhan, mis. sertifikat-builder-2615001.pdf. */
 export function namaFileSertifikat(d: DataSertifikat): string {
 	return `sertifikat-${d.tier}-${d.nim}.pdf`;
 }
 
+/** PDF A4 lanskap satu halaman berisi nama, NIM, tier, dan tanggal cetak. */
 export async function buatSertifikat(d: DataSertifikat): Promise<Uint8Array> {
 	const pdf = await PDFDocument.create();
 	pdf.setTitle(`Sertifikat ${LABEL_TIER[d.tier]} - ${d.nama}`);

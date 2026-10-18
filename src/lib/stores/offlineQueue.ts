@@ -54,11 +54,13 @@ export async function antrekanVerifikasi(pesertaId: string, misiId: string): Pro
 	await transaksi('readwrite', (toko) => toko.put(item));
 }
 
+/** Isi antrean saat ini; kosong bila IndexedDB tidak tersedia (mis. saat SSR). */
 export async function daftarAntrean(): Promise<AntreanVerifikasi[]> {
 	if (!dukunganTersedia()) return [];
 	return transaksi<AntreanVerifikasi[]>('readonly', (toko) => toko.getAll() as IDBRequest<AntreanVerifikasi[]>);
 }
 
+/** Buang satu item antrean, biasanya setelah server menerimanya. */
 export async function hapusDariAntrean(id: string): Promise<void> {
 	if (!dukunganTersedia()) return;
 	await transaksi('readwrite', (toko) => toko.delete(id));

@@ -14,6 +14,7 @@ function sel(v: NilaiCsv): string {
 	return teks;
 }
 
+/** CSV lengkap: BOM di depan dan CRLF di akhir tiap baris. */
 export function keCsv(header: string[], baris: NilaiCsv[][]): string {
 	const semua = [header, ...baris].map((r) => r.map(sel).join(';'));
 	return '\uFEFF' + semua.join('\r\n') + '\r\n';

@@ -77,6 +77,11 @@
 		}
 	}
 
+	// $state perlu objek baru, bukan mutasi, supaya tampilan ikut berubah.
+	function catat(id: string, h: Hasil) {
+		hasil = { ...hasil, [id]: h };
+	}
+
 	function jalan(soal: SoalSql) {
 		const db = dbBaru();
 		const dbKunci = dbBaru();
@@ -87,26 +92,20 @@
 			const kunci = tabelDari(dbKunci.exec(soal.kunci));
 
 			if (!keluaran) {
-				hasil = {
-					...hasil,
-					[soal.id]: {
-						ok: false,
-						pesan: 'Kuerimu belum menghasilkan tabel. Awali dengan SELECT, ya.'
-					}
-				};
+				catat(soal.id, {
+					ok: false,
+					pesan: 'Kuerimu belum menghasilkan tabel. Awali dengan SELECT, ya.'
+				});
 				return;
 			}
 			if (!kunci) return;
 
 			if (keluaran.kolom.length !== kunci.kolom.length) {
-				hasil = {
-					...hasil,
-					[soal.id]: {
-						ok: false,
-						pesan: `Jumlah kolomnya belum pas: kunci jawaban menghasilkan ${kunci.kolom.length} kolom, kuerimu ${keluaran.kolom.length} kolom.`,
-						tabel: keluaran
-					}
-				};
+				catat(soal.id, {
+					ok: false,
+					pesan: `Jumlah kolomnya belum pas: kunci jawaban menghasilkan ${kunci.kolom.length} kolom, kuerimu ${keluaran.kolom.length} kolom.`,
+					tabel: keluaran
+				});
 				return;
 			}
 
@@ -116,32 +115,23 @@
 				: samaMultiset(keluaran.baris, kunci.baris);
 
 			if (!cocok) {
-				hasil = {
-					...hasil,
-					[soal.id]: {
-						ok: false,
-						pesan: `Belum cocok: kunci jawaban menghasilkan ${kunci.baris.length} baris, kuerimu ${keluaran.baris.length} baris. Bandingkan lagi kolom dan barisnya.`,
-						tabel: keluaran
-					}
-				};
+				catat(soal.id, {
+					ok: false,
+					pesan: `Belum cocok: kunci jawaban menghasilkan ${kunci.baris.length} baris, kuerimu ${keluaran.baris.length} baris. Bandingkan lagi kolom dan barisnya.`,
+					tabel: keluaran
+				});
 				return;
 			}
 
-			hasil = {
-				...hasil,
-				[soal.id]: {
-					ok: true,
-					pesan: 'Tepat! Hasilnya cocok dengan kunci jawaban.',
-					tabel: keluaran
-				}
-			};
+			catat(soal.id, {
+				ok: true,
+				pesan: 'Tepat! Hasilnya cocok dengan kunci jawaban.',
+				tabel: keluaran
+			});
 			selesai.add(soal.id);
 			simpanProgres();
 		} catch (e) {
-			hasil = {
-				...hasil,
-				[soal.id]: { ok: false, pesan: e instanceof Error ? e.message : String(e) }
-			};
+			catat(soal.id, { ok: false, pesan: e instanceof Error ? e.message : String(e) });
 		} finally {
 			db.close();
 			dbKunci.close();

@@ -5,6 +5,7 @@
 export const PESAN_TAUTAN =
 	'Tautan tugas wajib berupa URL Google Drive (drive.google.com / docs.google.com) atau GitHub (github.com). Contoh: https://github.com/nama-kamu/repo-proyek';
 
+/** Hanya URL http(s) Google Drive atau GitHub yang punya path yang diterima. */
 export function tautanTugasValid(nilai: string): boolean {
 	let url: URL;
 	try {
@@ -32,6 +33,10 @@ export function tautanTugasValid(nilai: string): boolean {
 export const PESAN_VAULT =
 	'Isi tautan lengkap yang diawali https:// — misalnya tautan Google Drive (https://drive.google.com/file/d/...). Pastikan aksesnya "siapa saja yang memiliki tautan".';
 
+/**
+ * Lebih longgar dari tautanTugasValid: materi vault boleh dari layanan mana pun,
+ * asal URL http(s) lengkap dengan nama host berdomain.
+ */
 export function tautanVaultValid(nilai: string): boolean {
 	let url: URL;
 	try {

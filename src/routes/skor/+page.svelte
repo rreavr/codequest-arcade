@@ -1,9 +1,10 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import Bar from '#lib/ui/Bar.svelte';
 
 	let { data }: { data: PageData } = $props();
 
-	const maks = $derived(Math.max(1, ...data.kelompok.map((k) => k.total_poin)));
+	const maks = $derived(Math.max(0, ...data.kelompok.map((k) => k.total_poin)));
 </script>
 
 <div class="lembar lembar-lebar">
@@ -21,13 +22,13 @@
 			<ul class="senarai">
 				{#each data.kelompok as k, i (k.id)}
 					<li>
-						<div class="deret" style="justify-content: space-between">
+						<div class="deret deret-antara">
 							<strong class="angka">{i + 1}.</strong>
 							<span style="flex: 1">{k.nama}</span>
 							<span class="angka"><strong>{k.total_poin}</strong> poin</span>
 						</div>
-						<div class="bar" style="margin-top: 0.4rem">
-							<div class="bar-isi" style="width: {Math.round((k.total_poin / maks) * 100)}%"></div>
+						<div style="margin-top: 0.4rem">
+							<Bar bagian={k.total_poin} total={maks} />
 						</div>
 					</li>
 				{/each}

@@ -44,7 +44,7 @@
 <section>
 	{#each data.misi as m (m.id)}
 		<article class="misi {m.selesai ? 'selesai' : m.menunggu ? 'menunggu' : 'belum'}">
-			<div class="deret" style="justify-content: space-between">
+			<div class="deret deret-antara">
 				<h2 style="margin: 0">Misi {m.urut}: {m.judul}</h2>
 				{#if m.selesai}
 					<span class="chip chip-selesai"><Ikon nama="check" ukuran={13} />Selesai</span>
