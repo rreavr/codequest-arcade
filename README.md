@@ -2,8 +2,6 @@
 
 Situs pendamping acara HIMTI CodeQuest: First Level 2026 (21 November 2026). SvelteKit 3 + TypeScript + Supabase.
 
-Spesifikasi lengkap ada di [docs/PRD_CodeQuest_Arcade.md](docs/PRD_CodeQuest_Arcade.md). Peta modul dan alur data ada di [docs/ARSITEKTUR.md](docs/ARSITEKTUR.md).
-
 ## Kebutuhan
 
 - Node.js >= 22.17 (syarat SvelteKit 3). Proyek ini dikembangkan memakai Bun 1.4 — `npm` juga bisa.

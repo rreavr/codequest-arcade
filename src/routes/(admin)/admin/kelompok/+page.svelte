@@ -67,7 +67,7 @@
 			{/each}
 		</ul>
 
-		<div class="deret" style="margin-top: 0.6rem">
+		<div class="deret" style="margin-top: 0.6rem; align-items: center; flex-wrap: wrap">
 			<form method="POST" action="?/mentor" class="deret" style="gap: 0.35rem">
 				<input type="hidden" name="kelompok_id" value={k.id} />
 				<select name="mentor_id" aria-label="Mentor untuk {k.nama}">
@@ -80,11 +80,11 @@
 			</form>
 
 			{#if k.anggota.length === 0}
-				<form method="POST" action="?/hapus">
-					<input type="hidden" name="kelompok_id" value={k.id} />
-					<button class="btn btn-kecil btn-bahaya" type="submit">Hapus kelompok</button>
-				</form>
-			{/if}
+					<form method="POST" action="?/hapus" style="display: contents">
+						<input type="hidden" name="kelompok_id" value={k.id} />
+						<button class="btn btn-kecil btn-bahaya" type="submit">Hapus kelompok</button>
+					</form>
+				{/if}
 		</div>
 	</section>
 {/each}
